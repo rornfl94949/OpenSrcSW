@@ -21,6 +21,10 @@ public class kuir {
 		}else if (args[0].equals("-i")) {
 			String path = args[1];
 			indexer.indexer(path);
+		}else if (args[0].equals("-s")) {
+			String path = args[1];
+			String query = args[3];
+			searcher.searcher(path,query);
 		}
 	}
 
