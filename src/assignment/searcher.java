@@ -115,7 +115,7 @@ public class searcher {
 			Keyword kwrd = kl.get(i);
 			if(h_index.containsKey(kwrd.getString())){
 				for(int j = 0; j < doc_size ; j++) {
-					Denomi[0][i] += (1*1);
+					Denomi[0][j] += (1*1);
 				} //키워드가 있으면 그 키워드에 대한 가중치 1이 제곱으로 일단 다 들어감
 				Object temp = h_index.get(kwrd.getString());
 				double[] w_arr = (double[])temp;
@@ -126,7 +126,7 @@ public class searcher {
 				}
 			}else {
 				for(int j = 0; j < doc_size ; j++) {
-					Denomi[0][i] += (1*1); //키워드가 hashmap에 존재하지 않는다면 모든 문서는 이 키워드에 대해 가중치가 0이지만 분모에는 이 키워드에 대한 가중치가 1*1로 들어감
+					Denomi[0][j] += (1*1); //키워드가 hashmap에 존재하지 않는다면 모든 문서는 이 키워드에 대해 가중치가 0이지만 분모에는 이 키워드에 대한 가중치가 1*1로 들어감
 				}
 			}
 		}
