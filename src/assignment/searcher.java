@@ -93,16 +93,16 @@ public class searcher {
 		}
 	}
 	
-	public static Double[] CalcSim(String query, String path,int doc_size) throws IOException, ClassNotFoundException {
+	public static Double[] InnerProduct(String query, String path,int doc_size) throws IOException, ClassNotFoundException {
 		FileInputStream fileStream = new FileInputStream(path);
 		ObjectInputStream objectInputStream = new ObjectInputStream(fileStream);
 		Object object = objectInputStream.readObject();
 		objectInputStream.close();
 		HashMap h_index = (HashMap)object;
 		
-		Double[] weigh_list = new Double[doc_size];
-		for(int i =0; i < weigh_list.length; i++) {
-			weigh_list[i] = 0.0;
+		Double[] InnerProduct_list = new Double[doc_size];
+		for(int i =0; i < InnerProduct_list.length; i++) {
+			InnerProduct_list[i] = 0.0;
 		}
 		KeywordExtractor ke = new KeywordExtractor();
 		KeywordList kl = ke.extractKeyword(query, true);
@@ -113,13 +113,13 @@ public class searcher {
 				double[] w_arr = (double[])temp;
 				for(int j = 0; j < w_arr.length/2; j++) {
 					int index = (int) Math.round(w_arr[2*j]);
-					weigh_list[index] += w_arr[2*j +1];
+					InnerProduct_list[index] += w_arr[2*j +1];
 				}
 			}
 		}
-		for(int i = 0; i < weigh_list.length; i++) {
-			weigh_list[i] =  Double.parseDouble(String.format("%.3f",weigh_list[i]));
+		for(int i = 0; i < InnerProduct_list.length; i++) {
+			InnerProduct_list[i] =  Double.parseDouble(String.format("%.3f",InnerProduct_list[i]));
 		}
-		return weigh_list;
+		return InnerProduct_list;
 	}
 }
