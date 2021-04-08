@@ -100,10 +100,7 @@ public class searcher {
 		objectInputStream.close();
 		HashMap h_index = (HashMap)object;
 		
-		double [] inner_pro = new double[doc_size];
-		for(int i =0; i < doc_size; i++) {
-			inner_pro[i] = 0.0;
-		}
+		double [] inner_pro = InnerProduct(query,path,doc_size);
 		double [][] Denomi = new double[2][doc_size]; //분모의 루트 값을 2개로 분리 시킨것
 		for(int i =0; i < doc_size; i++) {
 			Denomi[0][i] = 0.0;
