@@ -100,7 +100,7 @@ public class searcher {
 		objectInputStream.close();
 		HashMap h_index = (HashMap)object;
 		
-		double [] inner_pro = InnerProduct(query,path,doc_size);
+		double[] inner_pro = InnerProduct(query,path,doc_size);
 		double [][] Denomi = new double[2][doc_size]; //분모의 루트 값을 2개로 분리 시킨것
 		for(int i =0; i < doc_size; i++) {
 			Denomi[0][i] = 0.0;
@@ -118,7 +118,6 @@ public class searcher {
 				double[] w_arr = (double[])temp;
 				for(int j = 0; j < w_arr.length/2; j++) {
 					int index = (int) Math.round(w_arr[2*j]);
-					inner_pro[index] += w_arr[2*j +1];
 					Denomi[1][index] += Math.pow(w_arr[2*j +1],2); 
 				}
 			}else {
@@ -136,4 +135,33 @@ public class searcher {
 		}
 		return weigh_list;
 	}
+	
+	public static double[] InnerProduct(String query, String path,int doc_size) throws IOException, ClassNotFoundException {
+	FileInputStream fileStream = new FileInputStream(path);
+	ObjectInputStream objectInputStream = new ObjectInputStream(fileStream);
+	Object object = objectInputStream.readObject();
+	objectInputStream.close();
+	HashMap h_index = (HashMap)object;
+	double[] InnerProduct_list = new double[doc_size];
+	for(int i =0; i < InnerProduct_list.length; i++) {
+		InnerProduct_list[i] = 0.0;
+	}
+	KeywordExtractor ke = new KeywordExtractor();
+	KeywordList kl = ke.extractKeyword(query, true);
+	for( int i = 0 ; i < kl.size(); i++) {
+		Keyword kwrd = kl.get(i);
+		if(h_index.containsKey(kwrd.getString())){
+			Object temp = h_index.get(kwrd.getString());
+			double[] w_arr = (double[])temp;
+			for(int j = 0; j < w_arr.length/2; j++) {
+				int index = (int) Math.round(w_arr[2*j]);
+				InnerProduct_list[index] += w_arr[2*j +1];
+			}
+		}
+	}
+	for(int i = 0; i < InnerProduct_list.length; i++) {
+		InnerProduct_list[i] =  Double.parseDouble(String.format("%.3f",InnerProduct_list[i]));
+	}
+	return InnerProduct_list;
+}
 }
